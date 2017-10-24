@@ -1,0 +1,22 @@
+{
+  "name": "ioc-container",
+  "version": "1.0.0",
+  "description": "A Simple IOC Container",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamiemaison/ioc-container.git"
+  },
+  "author": "Jamie Maison",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamiemaison/ioc-container/issues"
+  },
+  "homepage": "https://github.com/jamiemaison/ioc-container#readme",
+  "dependencies": {
+    "mocha": "^4.0.1"
+  }
+}
