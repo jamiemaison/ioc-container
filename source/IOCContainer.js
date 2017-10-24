@@ -50,8 +50,8 @@ module.exports = class IOCContainer {
 
 
     _resolveDefinition(componentName) {
-        var args = [];
-        for(var dependency of this.registeredComponents[componentName].dependencies) {
+        let args = [];
+        for(let dependency of this.registeredComponents[componentName].dependencies) {
             if(!this.registeredComponents[dependency]) {
                 throw new Error(errorMessages.DEPENDENCY_NOT_REGISTERED);
             };

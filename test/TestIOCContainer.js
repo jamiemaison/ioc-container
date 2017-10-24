@@ -10,7 +10,7 @@ const IOCContainer = require('../source/IOCContainer');
 
 describe("TestIOCContainer", function() {
     it("can handle a single dependency", function(done) {
-        const container = new IOCContainer();
+        let container = new IOCContainer();
         
         container.registerComponentInstance({name: "Composition", definition: CompositionA}, ["Genre"]);
         container.registerComponentInstance({name: "Genre", definition: BluesGenre});
@@ -23,7 +23,7 @@ describe("TestIOCContainer", function() {
     });
 
     it("can handle multiple dependencies", function(done) {
-        const container = new IOCContainer();
+        let container = new IOCContainer();
         
         container.registerComponentInstance({name: "Composition", definition: CompositionB}, ["Genre", "Artist"]);
         container.registerComponentInstance({name: "Genre", definition: BluesGenre});
@@ -38,7 +38,7 @@ describe("TestIOCContainer", function() {
     });
 
     it("can deregister component instances", function(done) {
-        const container = new IOCContainer();
+        let container = new IOCContainer();
         
         container.registerComponentInstance({name: "Composition", definition: CompositionA}, ["Genre"]);
         container.registerComponentInstance({name: "Genre", definition: BluesGenre});
@@ -55,7 +55,7 @@ describe("TestIOCContainer", function() {
     });
 
     it("can handle multiple get calls", function(done) {
-        const container = new IOCContainer();
+        let container = new IOCContainer();
         
         container.registerComponentInstance({name: "Composition", definition: CompositionB}, ["Genre", "Artist"]);
         container.registerComponentInstance({name: "Genre", definition: BluesGenre});
