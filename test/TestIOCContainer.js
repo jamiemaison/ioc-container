@@ -69,4 +69,38 @@ describe("TestIOCContainer", function() {
         assert.deepEqual("Jimi Hendrix", secondInstance.getArtist());
         done();
     });
+
+    it("can determine there are no circular dependencies", function(done) {
+        let container = new IOCContainer();
+        
+        container.registerComponentInstance({name: "Composition", definition: CompositionB}, ["Genre", "Artist"]);
+        container.registerComponentInstance({name: "Genre", definition: BluesGenre});
+        container.registerComponentInstance({name: "Artist", definition: JimiHendrix});
+        
+        assert.equal(false, container.isCircular("Composition", {}));
+        done();
+    });
+
+    it("can determine there are circular dependencies in a single branch of the tree", function(done) {
+        let container = new IOCContainer();
+        
+        container.registerComponentInstance({name: "Composition", definition: CompositionB}, ["Genre", "Artist"]);
+        container.registerComponentInstance({name: "Genre", definition: BluesGenre}, ["Composition"]);
+        
+        assert.equal(true, container.isCircular("Composition", {}));
+        done();
+    });
+
+    it("can determine there are circular dependencies in a all branches of the tree", function(done) {
+        let container = new IOCContainer();
+        
+        container.registerComponentInstance({name: "Composition", definition: CompositionB}, ["Genre", "Artist"]);
+        container.registerComponentInstance({name: "Genre", definition: BluesGenre});
+        container.registerComponentInstance({name: "Artist", definition: JimiHendrix}, ["James"]);
+        container.registerComponentInstance({name: "James", definition: JimiHendrix}, ["Pelligrino"]);
+        container.registerComponentInstance({name: "Pelligrino", definition: JimiHendrix}, ["Composition"]);
+        
+        assert.equal(container.isCircular("Composition", {}), true);
+        done();
+    });
 });

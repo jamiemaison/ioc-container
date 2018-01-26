@@ -3,6 +3,7 @@ const errorMessages = require('./errorMessages');
 module.exports = class IOCContainer {
     constructor () {
         this.registeredComponents = {};
+        this.vistedNodes = {}
     }
 
     /**
@@ -60,5 +61,24 @@ module.exports = class IOCContainer {
 
         this.registeredComponents[componentName].resolvedDefinition = new this.registeredComponents[componentName].definition(...args);
         return this.registeredComponents[componentName].resolvedDefinition
+    }
+
+    isCircular(componentName, visitedNodes) {
+        if (visitedNodes.hasOwnProperty(componentName)) {
+            return true
+        }
+        visitedNodes[componentName] = true
+
+        if (this.registeredComponents[componentName].dependencies.length > 0){
+            for (let dependency of this.registeredComponents[componentName].dependencies) {
+                if (this.isCircular(dependency, Object.assign({},visitedNodes))) {
+                    return true
+                }
+            }
+            return false
+        } else {
+            return false
+        }
+        
     }
 }
